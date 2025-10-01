@@ -174,8 +174,36 @@ tshark -r hiddenmsg.pcapng -Y "usbhid.data" \
   <img width="826" height="181" alt="Screenshot 2025-09-30 213043" src="https://github.com/user-attachments/assets/afd3e196-e079-4450-8821-ca0df339ff81" />
 
 ## Soal 16
+### 1. Membuka file capture
+- File yang diberikan: `Melkorplan1`.
+
+### 2. Membuka WSL
+- akses nc
+nc 10.15.43.32 3403
+<img width="533" height="172" alt="image" src="https://github.com/user-attachments/assets/3e7120ec-c9a6-43ae-981c-e65a59276b1c" />
+
+### 3. Cari Info User dan Pw di Wireshark
+- pake filter `frame contains "USER"`
+<img width="939" height="68" alt="image" src="https://github.com/user-attachments/assets/4841f735-1f10-4708-9cad-3a37bf508695" />
+
+### 4. Cari dan download file q.exe, w.exe, e.exe, r.exe, t.exe
+- `ftp.request.command == "USER"` nanti ada satu paket yang berbeda length nya itu file q.exe yang dicari, begtupun dengan file file lainnya
+  
+### 5. cari sha256 dari semua paket 
+<img width="663" height="302" alt="image" src="https://github.com/user-attachments/assets/a81b0334-1660-454e-9c00-56638059ec44" />
+
+### 6. jawab semua pertanyaan yang diberikan 
+<img width="916" height="691" alt="image" src="https://github.com/user-attachments/assets/aab9f582-ae78-4293-8957-6262840ceee8" />
 
 ## Soal 17
+### 1. Membuka file capture
+- File yang diberikan: `Melkorplan2`.
+
+### 2. Membuka WSL
+- akses nc
+nc 10.15.43.32 3404
+
+###
 
 ## Soal 18
 
