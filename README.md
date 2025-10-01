@@ -117,13 +117,128 @@ Dengan begini, Eru dan ke 4 Client sudah bisa berkomunikasi 1 sama lain.
 ## Soal 10
 
 ## Soal 11
+1. Pada Node Melkor :
+  - update & install telnet server + inetd (Debian-based)
+     ```sh
+      apt update
+      apt install -y openbsd-inetd telnetd || apt install -y inetutils-inetd telnetd
+
+     service openbsd-inetd restart || service inetutils-inetd restart || service inetd restart
+      ```
+  - Buat user untuk login telnet
+    ```sh
+    useradd -m praktikan11 -s /bin/bash
+    echo "praktikan11:praktikan123" | chpasswd
+    ```
+  - Buka text editor untuk mengedit `/etc/inetd.conf` dengan `nano`
+<img width="1128" height="635" alt="Screenshot 2025-10-01 180221" src="https://github.com/user-attachments/assets/f8b09735-0684-4740-ac4e-c1547e33c40e" />
+  - Hapus bagian "off" sehingga menjadi seperti berikut
+<img width="1095" height="648" alt="Screenshot 2025-10-01 180230" src="https://github.com/user-attachments/assets/7c86cf9a-9b5d-4d4a-99b1-59598d0f244a" />
+  - Dengan begitu sekarang service telnet pada Melkor sudah listening :
+    <img width="1098" height="111" alt="Screenshot 2025-10-01 180325" src="https://github.com/user-attachments/assets/25cb9f61-2bd4-4cdd-a9d9-a7b7195dce31" />
+
+2. Pada GNS 3 :
+   - Klik kanan pada koneksi antara Switch 1 dan Node Melkor, lalu pencet start Capture.
+  <img width="422" height="309" alt="Screenshot 2025-10-01 174421" src="https://github.com/user-attachments/assets/2c52dea1-379b-4195-a8ca-7dc5ad9bcff2" />  
+   - Setelah itu akan mengalihkan ke aplikasi Wireshark. 
+
+3. Pada Node Eru :
+   - Coba konekti telnet
+  ```sh
+  telnet 192.224.1.2 23
+  ```
+   - Login dengan user yang telah dibuat pada node Melkor.
+<img width="448" height="142" alt="Screenshot 2025-10-01 180712" src="https://github.com/user-attachments/assets/3c34e3e2-89a4-41d3-8d08-d9cf9e5fa9f9" />
+
+4. Cek wireshark :
+  - Pada wireshark, setelah Eru login akan muncul beberapa packet
+<img width="1919" height="746" alt="Screenshot 2025-10-01 180810" src="https://github.com/user-attachments/assets/05a7f3b4-8ad5-4c07-af91-13e4170b03c9" />
+
+  - Follow tcp stream salah satu packet dan akan ditemukan username dan password yang digunakan oleh Eru untuk login
+    <img width="1105" height="875" alt="Screenshot 2025-10-01 180803" src="https://github.com/user-attachments/assets/77233dc1-5f4b-482a-be66-cbcf5da6e80f" />
 
 ## Soal 12
+1. Pada Node Melkor :
+   - nyalakan FTP di Melkor (port 21)
+    ```sh
+    apt update
+    apt install -y vsftpd
+    service vsftpd start
+    ```
+   - nyalakan HTTP server (port 80)
+    ```sh
+    apt install -y apache2
+    service apache2 start
+    ```
+  - Setelah dijankan bisa dicek apakah port sudah listening
+    <img width="1106" height="155" alt="Screenshot 2025-10-01 183900" src="https://github.com/user-attachments/assets/cf7d1d6b-9776-4222-a07b-0b5826c910bc" />
+
+2.  Pada Node Eru :
+   - install netcat dengan menjalankan `which nc || apt update && apt install -y netcat-openbsd`.
+   - jalankan `nc -vz 192.224.1.2 21 80 666` lalu cek hasilnya
+     <img width="723" height="117" alt="Screenshot 2025-10-01 183904" src="https://github.com/user-attachments/assets/3cddc4d9-5cbb-4987-b380-fc813631e4a5" />
+
 
 ## Soal 13
 
-## Soal 14
+1. Pada Node Eru :
+   - Install sshd
+  ```sh
+  apt update
+  apt install -y openssh-server
+  ```
+   - Nyalakan service sshd
+  ```sh
+  # pastikan sshd jalan
+  service ssh start
+  ```
+  <img width="446" height="43" alt="image" src="https://github.com/user-attachments/assets/1227aaa6-be5b-4535-bb31-63dc17b56b54" />
 
+   - buat user vardauser dengan password vardapass123
+    ```sh
+    useradd -m -s /bin/bash vardauser
+    echo "vardauser:vardapass123" | chpasswd
+    ```
+
+2. Pada GNS3 :
+   - Klik kanan pada koneksi antara Switch 2 dan Node Varda, lalu pencet start Capture.
+     <img width="441" height="358" alt="Screenshot 2025-10-01 184930" src="https://github.com/user-attachments/assets/414dfac4-efad-4d30-980e-45c29fbbf15c" />
+   - Setelah itu akan mengalihkan ke aplikasi Wireshark. 
+    
+3. Pada Node Varda :
+  - login ke eru sebagai `vardauser`
+    ```sh
+    ssh vardauser@192.224.1.1
+    ```
+    <img width="930" height="346" alt="image" src="https://github.com/user-attachments/assets/743c1d80-9d78-48fc-b57d-981a34028910" />
+
+
+4. Hasil :
+  - Semua packet akan tertangkap oleh wireshark :
+    <img width="1919" height="960" alt="image" src="https://github.com/user-attachments/assets/ffd62122-1d85-412b-87c2-b515c469761c" />
+  - Follow tcp stream
+    <img width="1103" height="878" alt="image" src="https://github.com/user-attachments/assets/424d840f-47ef-4916-bc1e-d9f235a81771" />
+  - Semua paket yang dikirim telah dienkripsi oleh sshd
+
+## Soal 14
+saat buka file capture pertama kali, kita akan melihat berapa banyak packet yang ada, yaitu sebanyak `500358` packet.
+  <img width="1686" height="818" alt="Screenshot 2025-09-30 185630" src="https://github.com/user-attachments/assets/99d03efd-d879-438a-8a42-56da054ec2b4" />
+  
+dengan begitu dapat menjawab soal nomor 1 :
+<img width="1035" height="631" alt="Screenshot 2025-09-30 185649" src="https://github.com/user-attachments/assets/64f108e3-ca2b-4585-a46b-7488edbf2efe" />
+
+untuk mencari kredensial yang tepat, saya memfilter kata akhir nya yang dimana mengandung kata *"Login Successfull!"*
+<img width="1311" height="385" alt="Screenshot 2025-09-30 192303" src="https://github.com/user-attachments/assets/26d2d77a-ebae-4e39-8ca1-f0eaff8c18c2" />
+
+disini kita dapat bahwa kredensial yang digunakan adalah `n1enna:y4v4nn4_k3m3nt4r1` dan ditemukan pada stream `41824`.
+
+disini juga ditemukan service yang digunakan, yaitu `Fuzz Faster U Fool v2.1.0-dev`
+<img width="1088" height="568" alt="Screenshot 2025-09-30 193210" src="https://github.com/user-attachments/assets/adebd3cf-6f36-4c22-a130-5f70e5829a44" />
+
+dengan menyelesaikan soal nya, didapatkan flag sebagai berikut :
+<img width="826" height="458" alt="image" src="https://github.com/user-attachments/assets/35167f00-ea50-4fa1-8475-a01c2c5c6ba6" />
+
+dengan begitu, kita mendapat jawaban untuk nomor 
 ## Soal 15
 ### 1. Membuka file capture
 - File yang diberikan: `hiddenmsg.pcapng`.
