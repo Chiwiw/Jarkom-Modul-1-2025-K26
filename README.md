@@ -315,13 +315,60 @@ nc 10.15.43.32 3403
 - File yang diberikan: `Melkorplan2`.
 
 ### 2. Membuka WSL
-- akses nc
-nc 10.15.43.32 3404
+- akses nc 10.15.43.32 3404
+<img width="449" height="182" alt="image" src="https://github.com/user-attachments/assets/e65b9376-bbb5-4b4e-a1c0-8a7cfcc794c7" />
 
-###
+### 3. Cari Info file di Wireshark
+- export http object
+<img width="690" height="170" alt="image" src="https://github.com/user-attachments/assets/86788b5c-ca53-4cae-bfec-ea9961263afc" />
+
+### 4. Jawab pertanyaan 
+<img width="844" height="553" alt="image" src="https://github.com/user-attachments/assets/810507ba-12d9-43eb-a049-769ccb20d669" />
+
 
 ## Soal 18
+### 1. Membuka file capture
+- File yang diberikan: `Melkorplan3`.
+
+### 2. Membuka WSL
+- akses nc 10.15.43.32 3405
+<img width="507" height="207" alt="image" src="https://github.com/user-attachments/assets/65d9732a-4c38-44ca-972a-ba13a3b6e173" />
+
+### 3. Cari Info file di Wireshark
+- export smb object / frame contains ".exe"
+<img width="842" height="275" alt="image" src="https://github.com/user-attachments/assets/d6a2e296-7e9c-439b-af5b-bbaf6a52bfcf" />
+
+### 4. Jawab pertanyaan 
+<img width="908" height="533" alt="image" src="https://github.com/user-attachments/assets/e9298b75-cff4-44c6-be8b-f27ae4ce488c" />
 
 ## Soal 19
+### 1. Membuka file capture
+- File yang diberikan: `Melkorplan4`.
+
+### 2. Membuka WSL
+- akses nc 10.15.43.32 3406
+<img width="410" height="181" alt="image" src="https://github.com/user-attachments/assets/3dae54f2-5073-4c03-98cb-beae078bc17e" />
+
+### 3. Cari Info file di Wireshark
+- smtp -> follow stream tcp
+<img width="915" height="828" alt="image" src="https://github.com/user-attachments/assets/788c479c-4b2e-47f9-8d2d-7631e64de060" />
+
+### 4. Jawab pertanyaan 
+<img width="864" height="468" alt="image" src="https://github.com/user-attachments/assets/f1a94745-188b-40d9-90bc-3d4b4253005f" />
 
 ## Soal 20
+### 1. Membuka file capture
+- File yang diberikan: `Melkorplan5`.
+
+### 2. Membuka WSL
+- akses nc 10.15.43.32 3407
+<img width="412" height="199" alt="image" src="https://github.com/user-attachments/assets/af41eb10-2c39-48a0-b3bd-6bacb4be75ab" />
+
+### 3. Cari Info file di Wireshark
+- dari wireshark bisa diidentifikasi protocol yang dipake adalah TLS
+<img width="911" height="89" alt="image" src="https://github.com/user-attachments/assets/f311e0e6-b905-4c52-8fc9-78b06c574c2e" />
+- untuk mencari file malicious kita perlu men-setting wireshark, pergi ke preference, ke protocol, lalu cari TLS dan masukin keylogs yangs uda di berikan dr gdrive soal, lalu kita scrol di nomor 165 terdapat file yang mencurigakan
+<img width="755" height="331" alt="image" src="https://github.com/user-attachments/assets/8c86df17-aa21-4f68-a260-97c4302e114c" />
+
+### 4. Jawab pertanyaan 
+<img width="858" height="325" alt="image" src="https://github.com/user-attachments/assets/543e3fda-5d02-4bd4-8658-457d86f27560" />
