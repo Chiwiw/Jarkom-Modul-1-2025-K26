@@ -111,15 +111,15 @@ Dengan begini, Eru dan ke 4 Client sudah bisa berkomunikasi 1 sama lain.
 ### 1. masuk ke node manwe
 telnet 10.15.43.32 (port manwe)
 
-###3. buka wireshark
+### 2. buka wireshark
 capture jaringan komunikasi manwe lewat gns3
 
-### 2. membuat file traffic
+### 3. membuat file traffic
 nano traffic.sh
 chmod +x traffic.sh
 ./traffic.sh
 
-###3. buka wireshark
+### 4. buka wireshark
 ip.src == 192.224.1.3
 
 ## Soal 7
