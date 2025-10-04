@@ -108,14 +108,153 @@ Dengan begini, Eru dan ke 4 Client sudah bisa berkomunikasi 1 sama lain.
 
 ## Soal 6
 
-## Soal 7
+### 1. masuk ke node manwe
+telnet 10.15.43.32 (port manwe)
 
+###3. buka wireshark
+capture jaringan komunikasi manwe lewat gns3
+
+### 2. membuat file traffic
+nano traffic.sh
+chmod +x traffic.sh
+./traffic.sh
+
+###3. buka wireshark
+ip.src == 192.224.1.3
+
+## Soal 7
+### 1. masuk ke node Eru 
+telnet 10.15.43.32 (port eru)
+
+### 2. Setup FTP
+apt update
+apt install vsftpd -y
+
+### 3. membuat folder 
+```
+mkdir -p /shared
+```
+### 4. membuat user
+```
+adduser melkor 
+adduser ainur
+```
+### 5. konfigurasi FTP
+nano /etc/vsftpd.conf 
+``` 
+isten=YES
+listen_ipv6=NO
+anonymous_enable=NO
+chroot_local_user=YES
+allow_writeable_chroot=YES
+```
+
+### 6. install 
+apt install -y inetutils-ftp 
+ftp localhost
+
+### 7. ubah kepemilikan dan akses direktori
+```
+chown ainur:ainur shared/
+chmod 700 shared/
+```
+
+### 8. tes 
+- masuk ke user ainur
+```
+su ainur
+touch /shared/test.txt
+```
+- masuk ek user melkor
+```
+su melkor
+touch /shared/test.txt
+```
 ## Soal 8
 
+### 1. masuk ke node Ulmo
+telnet 10.15.43.32 (port ulmo)
+
+### 2. Download cuaca.zip 
+```
+wget --no-check-certificate "https://drive.google.com/uc?export=download&id=11ra_yTV_adsPIXeIPMSt0vrxCBZu0r33" -O cuaca.zip
+unzip cuaca.zip
+```
+### 3. connect ke FTP Eru
+```
+ftp 192.168.122.207 21
+```
+
+### 4. ubah config ftp di eru
+```
+write_enable=YES
+service vsftpd restart
+```
+
+###  5. upload file 
+```
+put cuaca.txt
+put mendung.jpg
+```
+
 ## Soal 9
+### 1. masuk ke node manwe
+```
+apt update
+apt install ftp
+```
+
+### 2. connect ftp ke eru
+```
+ftp 192.168.122.207 21
+```
+
+### 3. mempersiapkan file
+- masuk ke node eru
+```
+wget --no-check-certificate "https://drive.google.com/uc?export=download&id=11ua2KgBu3MnHEIjhBnzqqv2RMEiJsILY" -O kitab_penciptaan.zip
+unzip kitab_penciptaan.zip
+mv kitab_penciptaan.txt /shared
+chown ainur:ainur /shared
+chmod 777 /shared
+```
+
+### 4. ubah config vsftpd
+```
+service vsftpd start
+nano /etc/vsftpd.conf
+chroot_local_user=NO
+service vsftpd restart
+```
+
+### 5. balik ke manwe
+```
+ls /shared
+cd /shared
+get kitab_penciptaan.txt
+```
+
+### 6. setup read-only
+```
+nano /etc/vsftpd.conf
+write_enable=NO
+service vsftpd restart 
+chmod 444 /shared/kitab_penciptaan.txt
+```
 
 ## Soal 10
 
+```
+ping -c 100 192.168.122.207
+```
+nanti diakhir akan ada infomasi berapa packet loss yang terjadi dan rtt nya
+```
+--- 192.168.122.207 ping statistics ---
+100 packets transmitted, 100 received, 0% packet loss, time 112606ms
+rtt min/avg/max/mdev = 0.168/0.356/0.877/0.093 ms
+
+```
+kesimpulannya krn packet loss 0 maka hal ini tidak mempengaruhi kinerja dari eru 
 ## Soal 11
 1. Pada Node Melkor :
   - update & install telnet server + inetd (Debian-based)
